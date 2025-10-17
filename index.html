@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hai Nyettt</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            color: #333;
+            text-align: center;
+            overflow-x: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            max-width: 600px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 2s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        h1 {
+            color: #ff6b9d;
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .age {
+            font-size: 1.5em;
+            color: #ff4757;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        /* Hilangkan pesan ucapan di sini - pindah ke modal */
+        .heart {
+            font-size: 4em;
+            color: #ff6b9d;
+            animation: heartbeat 1.5s infinite;
+        }
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        .btn {
+            background: #ff6b9d;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 10px;
+            transition: background 0.3s, transform 0.2s;
+        }
+        .btn:hover {
+            background: #ff4757;
+            transform: scale(1.05);
+        }
+        /* Styling khusus untuk tombol musik (opsional, biar lebih musik-themed) */
+        .btn-music {
+            background: linear-gradient(45deg, #ff6b9d, #4ecdc4);
+        }
+        .btn-music:hover {
+            background: linear-gradient(45deg, #ff4757, #45b7d1);
+        }
+        .btn-amplop {
+            background: linear-gradient(45deg, #ff6b9d, #ff4757);
+            font-size: 1.1em;
+            padding: 18px 35px;
+            box-shadow: 0 5px 15px rgba(255, 107, 157, 0.4);
+        }
+        .btn-amplop:hover {
+            background: linear-gradient(45deg, #ff4757, #ff6b9d);
+            transform: scale(1.1) rotate(5deg); /* Efek miring lucu */
+        }
+        .photo {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin: 20px 0;
+            object-fit: cover;
+            border: 5px solid #ff6b9d;
+            box-shadow: 0 5px 20px rgba(255, 107, 157, 0.3);
+            /* Opsional: Blur foto awal biar lebih misterius */
+            /* filter: blur(2px); */
+        }
+        /* Animasi Konfeti Umum */
+        .confetti {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ff6b9d;
+            opacity: 0.8;
+            animation: confetti-fall linear infinite;
+        }
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        /* Modal Amplop Surprise - Di sini ada ucapan lengkap */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            animation: modalFadeIn 0.5s ease-out;
+        }
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .modal-content {
+            background: linear-gradient(135deg, #fff, #ffeef0);
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(255, 107, 157, 0.5);
+            animation: glowPulse 2s infinite alternate;
+            position: relative;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        @keyframes glowPulse {
+            from { box-shadow: 0 20px 50px rgba(255, 107, 157, 0.5); }
+            to { box-shadow: 0 20px 60px rgba(255, 107, 157, 0.8); }
+        }
+        .modal h2 {
+            color: #ff6b9d;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        .modal .age-modal {
+            font-size: 1.5em;
+            color: #ff4757;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .modal p {
+            font-size: 1.1em;
+            line-height: 1.5;
+            margin: 15px 0;
+        }
+        .hearts-rain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .heart-piece {
+            position: absolute;
+            font-size: 20px;
+            color: #ff6b9d;
+            animation: heartFall linear infinite;
+            opacity: 0.8;
+        }
+        @keyframes heartFall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        .close-btn {
+            background: #ff4757;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-size: 1em;
+        }
+        .close-btn:hover {
+            background: #ff6b9d;
+        }
+    </style>
+</head>
+<body>
+    <div class="confetti" id="confetti"></div>
+    
+    <div class="container">
+        <h1>🎉 Anisa Ramadhani! 🎉 </h1>
+        <div class="age">Met Ulang Tahun Spesial ke-20 Ye Tuaaa! 🥳</div> <!-- Tanpa nama dulu biar misterius -->
+        
+        <img src="ye.jpg" alt="Foto spesial" class="photo"> <!-- Ganti dengan foto Anisa lo -->
+        
+        <div class="heart">💖</div>
+        
+        <!-- Tidak ada pesan ucapan di sini - pindah ke modal -->
+        
+        <button class="btn btn-music" onclick="playMusic()">Dengerin Lagu Keren 🎵</button>
+        <button class="btn btn-amplop" onclick="openAmplop()">💌 Nih buat lo kakak yang baik dan hebat!</button>
+    </div>
+
+    <!-- Modal Amplop Surprise - Ucapan lengkap ada di sini -->
+    <div class="modal" id="amplopModal">
+        <div class="hearts-rain" id="heartsRain"></div>
+        <div class="modal-content">
+            <h2>🌟 SELAMAT ULANG TAHUN CANTIIK, ANISA RAMADHANI! 🌟</h2>
+            <div class="age-modal">Ke-20 lo yang paling cakkeevable! 🥰</div>
+            
+            <p>Kak, ini hari spesial lu kan ya. Selamat ultah ya kak, sehat selalu, panjang umur, jangan lupa buat self reward karena gua blom bisa berperan apapun buat lo kak! Di umur 20 ini, semoga semua mimpi lu kejadian, karir lancar, dan tetep se-RAME ini ya ke gua hehe meski gak ada yang tau kedepannya kita akan kemana dan gimana. Gua seneng lu udah sejauh ini dan sejauh ini kita masi kenal sampe sejauh ini, forever and always! 😍✨</p>
+            
+            <p>lU ITU SPESIAL buat gua tapi gua masih blom bisa buat lu merasa begitu, dan gua mengusahakan ko, maafin gua ya yang slalu gada waktu buat lo ka, gua sayang sama lo ka meskipun gua gapernah ngucap ini. slamat menempuh hidup di kepaal dua yaaaaaa ❤‍🔥</p>
+
+            <p>Dari: tetep jadi orang yang gua kenal ya ka sampe gua bener bener bbisa treat lo lebih baikk ❤‍🔥</p>
+            
+            <p>Dari: ade ade gemush soft spoken ❤‍🔥</p>
+            
+            <p><em>"Being strong women for urself ya ka and goodluck for your goals." Dari gua ni buat lu karena dan lagi lagi blom bisa kasih apa apa selain ini 💅.</em></p>
+            
+            <button class="close-btn" onclick="closeAmplop()">Tutup & Hug Virtual 🤗</button>
+        </div>
+    </div>
+
+    <script>
+        // Fungsi Konfeti Umum
+        function startConfetti() {
+            const confetti = document.getElementById('confetti');
+            confetti.innerHTML = '';
+            for (let i = 0; i < 100; i++) {
+                const piece = document.createElement('div');
+                piece.className = 'confetti-piece';
+                piece.style.left = Math.random() * 100 + 'vw';
+                piece.style.background = `hsl(${Math.random() * 360}, 70%, 60%)`; // Fixed: Gunakan backticks untuk template literal
+                piece.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                piece.style.animationDelay = Math.random() * 2 + 's';
+                confetti.appendChild(piece);
+            }
+            setTimeout(() => { confetti.innerHTML = ''; }, 5000);
+        }
+
+        // Fungsi Musik - Sekarang buka link Spotify di tab baru
+        function playMusic() {
+            // Ganti 'https://open.spotify.com/playlist/EXAMPLE' dengan link Spotify sebenarnya
+            // Contoh: Lagu spesial, playlist ultah, atau album favorit Anisa
+            // Misal: 'https://open.spotify.com/track/4uLU6hMCjMI75M1A2tKUQC' (ganti dengan linkmu)
+            const spotifyLink = 'https://open.spotify.com/track/3FPlY1uqTe1oFfIgI0BnoA?si=iIrvJWzPSc6N5fBG7CR7cw'; // Contoh: Playlist "Happy Birthday" di Spotify
+            window.open(spotifyLink, '_blank'); // Buka di tab baru
+            // Opsional: Tambah alert atau efek suara jika mau
+            // alert('Lagu spesial buat ultah lo lagi diputar di Spotify! 🎶');
+        }
+
+        // Fungsi Amplop Surprise - Trigger ucapan dan animasi
+        function openAmplop() {
+            const modal = document.getElementById('amplopModal');
+            modal.style.display = 'flex';
+            startHeartsRain(); // Mulai hati beterbangan
+            startConfetti(); // Tambah konfeti di background modal
+            // Auto close setelah 10 detik biar bisa baca ucapan panjang
+            setTimeout(closeAmplop, 10000);
+        }
+
+        function closeAmplop() {
+            const modal = document.getElementById('amplopModal');
+            modal.style.display = 'none';
+            document.getElementById('heartsRain').innerHTML = ''; // Stop hati
+            document.getElementById('confetti').innerHTML = ''; // Stop konfeti
+        }
+
+        // Animasi Hati Beterbangan di Modal
+        function startHeartsRain() {
+            const heartsRain = document.getElementById('heartsRain');
+            heartsRain.innerHTML = '';
+            for (let i = 0; i < 50; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart-piece';
+                heart.innerHTML = '💖';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 4 + 3) + 's';
+                heart.style.animationDelay = Math.random() * 2 + 's';
+                heart.style.fontSize = (Math.random() * 20 + 15) + 'px'; // Ukuran random
+                heartsRain.appendChild(heart);
+            }
+            // Hapus setelah 10 detik
+            setTimeout(() => { heartsRain.innerHTML = ''; }, 10000);
+        }
+
+        // Auto-start konfeti ringan saat load (tanpa ucapan)
+        window.onload = function() {
+            setTimeout(() => {
+                startConfetti(); // Konfeti awal buat tease
+            }, 1000);
+        };
+    </script>
+</body>
+</html>
